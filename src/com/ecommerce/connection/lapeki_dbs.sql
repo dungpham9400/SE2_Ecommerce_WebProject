@@ -1,13 +1,13 @@
--- MySQL dump 10.13  Distrib 8.0.23, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.15, for Win64 (x86_64)
 --
 -- Host: localhost    Database: lapeki_dbs
 -- ------------------------------------------------------
--- Server version	8.0.23
+-- Server version	8.0.15
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!50503 SET NAMES utf8 */;
+ SET NAMES utf8 ;
 /*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
 /*!40103 SET TIME_ZONE='+00:00' */;
 /*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
@@ -15,32 +15,27 @@
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
-DROP database IF EXISTS lapeki_dbs;
-create database lapeki_dbs;
-use lapeki_dbs;
-
-
 --
 -- Table structure for table `cart`
 --
 
 DROP TABLE IF EXISTS `cart`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `cart` (
-  `cart_id` int unsigned NOT NULL AUTO_INCREMENT,
-  `voucher_id` int unsigned DEFAULT NULL,
-  `user_id` int unsigned NOT NULL,
+  `cart_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `voucher_id` int(10) unsigned DEFAULT NULL,
+  `user_id` int(10) unsigned NOT NULL,
   `order_date` date NOT NULL,
-  `status` varchar(25) NOT NULL,
-  `payment_mode` varchar(25) NOT NULL,
+  `status` varchar(25) COLLATE utf8mb4_vietnamese_ci NOT NULL,
+  `payment_mode` varchar(25) COLLATE utf8mb4_vietnamese_ci NOT NULL,
   `total` float NOT NULL,
   PRIMARY KEY (`cart_id`),
   KEY `FK_CartVoucher` (`voucher_id`),
   KEY `FK_CartUser` (`user_id`),
   CONSTRAINT `FK_CartUser` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON DELETE CASCADE,
   CONSTRAINT `FK_CartVoucher` FOREIGN KEY (`voucher_id`) REFERENCES `voucher` (`voucher_id`) ON DELETE SET NULL
-) ENGINE=InnoDB AUTO_INCREMENT=100001 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=100013 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -49,7 +44,7 @@ CREATE TABLE `cart` (
 
 LOCK TABLES `cart` WRITE;
 /*!40000 ALTER TABLE `cart` DISABLE KEYS */;
-INSERT INTO `cart` VALUES (100000,100000,100001,'2021-05-07','Pending','COD',20145);
+INSERT INTO `cart` VALUES (100000,100000,100001,'2021-05-07','Pending','COD',20145),(100001,100000,100003,'2021-11-10','Delivered','COD',20145),(100002,100000,100011,'2021-10-20','Pending','COD',263800),(100003,100000,100011,'2021-10-20','Pending','COD',263800),(100004,100001,100011,'2021-10-20','Pending','COD',589900),(100005,11111,100011,'2021-10-20','Pending','COD',225900),(100006,11111,100005,'2021-11-30','Delivered','COD',124000),(100007,11111,100000,'2021-12-01','Pending','COD',280000),(100008,11111,100000,'2021-12-01','Pending','ZaloPay',136900),(100009,11111,100005,'2021-12-02','Pending','COD',176000),(100010,100000,100005,'2021-12-03','Pending','COD',135000),(100011,11111,100005,'2021-12-03','Pending','COD',180000),(100012,100001,100005,'2021-12-03','Pending','COD',524450);
 /*!40000 ALTER TABLE `cart` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -59,12 +54,12 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `cartline`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `cartline` (
-  `cartline_id` int unsigned NOT NULL AUTO_INCREMENT,
-  `cart_id` int unsigned NOT NULL,
-  `product_id` int unsigned NOT NULL,
-  `quantity` int NOT NULL,
+  `cartline_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `cart_id` int(10) unsigned NOT NULL,
+  `product_id` int(10) unsigned NOT NULL,
+  `quantity` int(11) NOT NULL,
   `unit_price` float NOT NULL,
   `create_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`cartline_id`),
@@ -72,7 +67,7 @@ CREATE TABLE `cartline` (
   KEY `FK_CartlineProduct` (`product_id`),
   CONSTRAINT `FK_CartlineCart` FOREIGN KEY (`cart_id`) REFERENCES `cart` (`cart_id`) ON DELETE CASCADE,
   CONSTRAINT `FK_CartlineProduct` FOREIGN KEY (`product_id`) REFERENCES `product` (`product_id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=100002 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=100020 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -81,7 +76,7 @@ CREATE TABLE `cartline` (
 
 LOCK TABLES `cartline` WRITE;
 /*!40000 ALTER TABLE `cartline` DISABLE KEYS */;
-INSERT INTO `cartline` VALUES (100001,100000,100000,2,25364,'2021-05-06 18:26:41');
+INSERT INTO `cartline` VALUES (100001,100000,100000,2,25364,'2021-05-06 18:26:41'),(100002,100001,100001,3,25364,'2021-11-09 18:26:41'),(100003,100001,100005,1,25364,'2021-11-09 18:26:41'),(100004,100002,100034,1,235000,'2021-10-20 15:18:47'),(100005,100002,100039,1,99000,'2021-10-20 15:18:48'),(100006,100003,100034,1,235000,'2021-10-20 15:18:48'),(100007,100003,100039,1,99000,'2021-10-20 15:18:48'),(100008,100004,100000,1,89000,'2021-10-20 15:26:31'),(100009,100004,100037,1,130000,'2021-10-20 15:26:32'),(100010,100004,100027,1,799000,'2021-10-20 15:26:32'),(100011,100005,100000,1,89000,'2021-10-20 15:30:28'),(100012,100005,100020,1,106900,'2021-10-20 15:30:28'),(100013,100006,100035,1,94000,'2021-11-30 16:47:59'),(100014,100007,100004,1,250000,'2021-12-01 14:44:06'),(100015,100008,100020,1,106900,'2021-12-01 15:34:43'),(100016,100009,100032,1,146000,'2021-12-02 08:01:51'),(100017,100010,100033,1,150000,'2021-12-03 13:54:37'),(100018,100011,100033,1,150000,'2021-12-03 13:57:50'),(100019,100012,100019,1,899000,'2021-12-03 14:55:52');
 /*!40000 ALTER TABLE `cartline` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -91,10 +86,10 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `category`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `category` (
-  `category_id` int unsigned NOT NULL AUTO_INCREMENT,
-  `category_name` varchar(25) COLLATE utf8mb4_vietnamese_ci NOT NULL,
+  `category_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `category_name` varchar(25) CHARACTER SET utf8mb4 COLLATE utf8mb4_vietnamese_ci NOT NULL,
   `create_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`category_id`),
   UNIQUE KEY `category_name` (`category_name`)
@@ -117,15 +112,15 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `product`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `product` (
-  `product_id` int unsigned NOT NULL AUTO_INCREMENT,
-  `category_id` int unsigned NOT NULL,
-  `product_name` text COLLATE utf8mb4_vietnamese_ci NOT NULL,
-  `product_img` text COLLATE utf8mb4_vietnamese_ci NOT NULL,
+  `product_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `category_id` int(10) unsigned NOT NULL,
+  `product_name` text CHARACTER SET utf8mb4 COLLATE utf8mb4_vietnamese_ci NOT NULL,
+  `product_img` text CHARACTER SET utf8mb4 COLLATE utf8mb4_vietnamese_ci NOT NULL,
   `product_price` float NOT NULL,
-  `instock` int NOT NULL,
-  `product_description` longtext COLLATE utf8mb4_vietnamese_ci NOT NULL,
+  `instock` int(11) NOT NULL,
+  `product_description` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_vietnamese_ci NOT NULL,
   `create_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`product_id`),
   KEY `FK_ProductCategory` (`category_id`),
@@ -149,24 +144,24 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `user`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `user` (
-  `user_id` int unsigned NOT NULL AUTO_INCREMENT,
-  `user_name` varchar(25) COLLATE utf8mb4_vietnamese_ci NOT NULL,
-  `user_password` varchar(25) COLLATE utf8mb4_vietnamese_ci NOT NULL,
-  `user_fullname` varchar(30) COLLATE utf8mb4_vietnamese_ci NOT NULL,
-  `user_phone` varchar(10) COLLATE utf8mb4_vietnamese_ci NOT NULL,
-  `user_email` varchar(50) COLLATE utf8mb4_vietnamese_ci NOT NULL,
-  `user_address` varchar(200) COLLATE utf8mb4_vietnamese_ci NOT NULL,
-  `gender` varchar(10) COLLATE utf8mb4_vietnamese_ci NOT NULL,
+  `user_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `user_name` varchar(25) CHARACTER SET utf8mb4 COLLATE utf8mb4_vietnamese_ci NOT NULL,
+  `user_password` varchar(25) CHARACTER SET utf8mb4 COLLATE utf8mb4_vietnamese_ci NOT NULL,
+  `user_fullname` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_vietnamese_ci NOT NULL,
+  `user_phone` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_vietnamese_ci NOT NULL,
+  `user_email` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_vietnamese_ci NOT NULL,
+  `user_address` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_vietnamese_ci NOT NULL,
+  `gender` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_vietnamese_ci NOT NULL,
   `user_dob` date NOT NULL,
-  `role_id` int NOT NULL,
+  `role_id` int(11) NOT NULL,
   `create_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`user_id`),
   UNIQUE KEY `user_name` (`user_name`),
   UNIQUE KEY `user_phone` (`user_phone`),
   UNIQUE KEY `user_email` (`user_email`)
-) ENGINE=InnoDB AUTO_INCREMENT=100005 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=100013 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -175,7 +170,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (100000,'huubang','123456','Nguyễn Hữu  Bằng','0357767156','huubang@lapeki.com','Ninh Bình','Male','2000-05-01',1,'2021-05-06 17:24:13'),(100001,'dunghoang','123456','Hoàng Tiến Dũng','0357867156','dunghoang@lapeki.com','Hải Dương','Male','2000-05-04',0,'2021-05-06 17:24:13'),(100002,'minhduong','123456','Trần Minh Dương','0357767356','minhduong@lapeki.com','Hà Nội','Male','2000-07-01',0,'2021-05-06 17:24:13'),(100003,'thanhtra','123456','Nguyễn Thị Thanh Trà','0957412358','thanhtra@lapeki.com','Unkown','Female','2000-05-04',0,'2021-05-06 17:24:13'),(100004,'anhtu','123456','Trần Anh Tú','0356214852','anhtu@lapeki.com','Hà Nội','Male','2000-05-09',0,'2021-05-06 17:24:13');
+INSERT INTO `user` VALUES (100000,'huubang','123456','Nguyen Huu Bang','0357767156','huubang@lapeki.com','Ninh Binh','Male','2000-05-01',1,'2021-05-06 17:24:13'),(100001,'huyenbui','123456','Bui Thi Thanh Huyen','0357867156','huyenbui@lapeki.com','Ha Noi','Male','2000-05-04',0,'2021-05-06 17:24:13'),(100002,'hangpham','123456','Pham Thi Hang','0357767356','hangpham@lapeki.com','Nghe An','Male','2000-07-01',0,'2021-05-06 17:24:13'),(100003,'tqthinh','123456','Tran Quang Thinh','0957412358','tqt@lapeki.com','Unkown','Female','2000-05-04',0,'2021-05-06 17:24:13'),(100004,'anhtu','123456','Trần Anh Tú','0356214852','anhtu@lapeki.com','Hà Nội','Male','2000-05-09',0,'2021-05-06 17:24:13'),(100005,'taehun00','123456','Pham Thu Dung','0379662226','dungpham10112000@gmail.com','Thai Binh','Female','2000-11-10',1,'2021-10-19 16:51:17'),(100010,'ptdung','123456','Pham Thu Dung','012345678','ptdung@gmail.com','Thai Binh','Female','2000-11-10',0,'2021-10-20 08:08:03'),(100011,'huubang123','12345777','Pham Thu Dung','0379662228','dungpham0112000@gmail.com','HaÌ NÃ´Ì£i','Female','2021-10-13',0,'2021-10-20 15:12:54');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -185,11 +180,11 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `voucher`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `voucher` (
-  `voucher_id` int unsigned NOT NULL AUTO_INCREMENT,
-  `voucher_code` varchar(25) COLLATE utf8mb4_vietnamese_ci NOT NULL,
-  `discount_percent` int NOT NULL,
+  `voucher_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `voucher_code` varchar(25) CHARACTER SET utf8mb4 COLLATE utf8mb4_vietnamese_ci NOT NULL,
+  `discount_percent` int(11) NOT NULL,
   `expire_date` date NOT NULL,
   `create_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`voucher_id`),
@@ -203,7 +198,7 @@ CREATE TABLE `voucher` (
 
 LOCK TABLES `voucher` WRITE;
 /*!40000 ALTER TABLE `voucher` DISABLE KEYS */;
-INSERT INTO `voucher` VALUES (100000,'SALE0 5/05',30,'2021-05-30','2021-05-06 18:13:18'),(100001,'BLACK FRIDAY',45,'2021-05-30','2021-05-06 18:13:18');
+INSERT INTO `voucher` VALUES (11111,'DEFAULT',0,'2021-05-30','2021-05-06 18:13:18'),(100000,'SALE0 5/05',30,'2021-05-30','2021-05-06 18:13:18'),(100001,'BLACK FRIDAY',45,'2021-05-30','2021-05-06 18:13:18');
 /*!40000 ALTER TABLE `voucher` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -216,4 +211,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-05-07  1:55:43
+-- Dump completed on 2021-12-09 23:40:57
